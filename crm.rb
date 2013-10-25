@@ -154,7 +154,7 @@ class CRM
     end
   end
 
-  def delete_contact #try displaying a particular contact first
+  def delete_contact
     puts "Which contact do you wish to delete? Enter id number: "
     id_number = gets.to_i
     display_particular_contact(id_number)
