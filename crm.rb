@@ -49,7 +49,6 @@ class CRM
       main_menu
     when 6
       puts "Goodbye"
-      exit 
     else
       puts "\e[H\e[2J"
       puts "Enter a number."
