@@ -185,5 +185,4 @@ my_crm.main_menu
 #questions is the way I set it to loop a good way or a horrible one
 # what about searching by other attributes? other than id number 
 # same way as I did for id number just requires a lot more asking the user for things
-# how would I loop over my_crm.main_menu another way? 
-# can i get the user_selected outside of the method? looks like no at the moment, but i don't know
+# how would I loop over my_crm.main_menu another way? found one
