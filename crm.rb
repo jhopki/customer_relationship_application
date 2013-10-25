@@ -183,3 +183,8 @@ my_crm = CRM.new("firstCRM")
 puts my_crm.name
 
 my_crm.main_menu
+
+#questions is the way I set it to loop a good way or horrible one
+# what about searching by other attributes? other than id number 
+# same way as I did for id number 
+# 
