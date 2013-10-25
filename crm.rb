@@ -99,7 +99,6 @@ class CRM
 
 
   def display_particular_contact(id_num)
-    puts id_num
     Rolodex.contacts.each do |x|
       if x.id == id_num
         puts "First name: #{x.first_name}"
@@ -111,6 +110,11 @@ class CRM
     end
   end
 
+  def edit_attribute(modify_what, id_num)
+    display_particular_contact(id_num)
+    puts "Enter new choices[modify_what]: "
+    new_name = gets.chomp
+  end
 
   def modify_existing_contact
     choices = {1 => "first name", 2 => "last name", 3 => "email", 4 => "note"}
@@ -123,37 +127,22 @@ class CRM
     if confirm == "y"
       puts "Enter the id number of the contact you want to change: "
       id_num = gets.to_i
+      display_particular_contact(id_num)
+      puts "Enter new #{choices[modify_what]}"
+      new_value = gets.chomp
       case modify_what
       # search each contact in rolodex to look for match, start by assuming all unique
       when 1
-        display_particular_contact(id_num)
-        puts "Enter new first name: "
-        new_name = gets.chomp
-        Rolodex.contacts.each {|x| x.first_name = new_name if x.id == id_num}
-        puts "Updated contact:"
-        display_particular_contact(id_num)
+        Rolodex.contacts.each {|x| x.first_name = new_value if x.id == id_num}
       when 2
-        display_particular_contact(id_num) 
-        puts "Enter new last name: "
-        new_name = gets.chomp
-        Rolodex.contacts.each {|x| x.last_name = new_name if x.id == id_num}
-        puts "Updated contact: "
-        display_particular_contact(id_num)      
+        Rolodex.contacts.each {|x| x.last_name = new_value if x.id == id_num}
       when 3
-        display_particular_contact(id_num)
-        puts "Enter new email: "
-        new_email = gets.chomp
-        Rolodex.contacts.each {|x| x.email = new_email if x.id == id_num}
-        puts "Updated contact: "
-        display_particular_contact(id_num)  
+        Rolodex.contacts.each {|x| x.email = new_value if x.id == id_num}  
       when 4
-        display_particular_contact(id_num)
-        puts "Enter new note:"
-        new_note = gets.chomp
-        Rolodex.contacts.each {|x| x.note = new_note if x.id == id_num}
-        puts "Updated contact: "
-        display_particular_contact(id_num)     
+        Rolodex.contacts.each {|x| x.note = new_value if x.id == id_num}
       end
+      puts "Updated contact: "
+      display_particular_contact(id_num)
     elsif confirm == "n"
       main_menu
     else
@@ -184,7 +173,10 @@ puts my_crm.name
 
 my_crm.main_menu
 
+
+
 #questions is the way I set it to loop a good way or horrible one
 # what about searching by other attributes? other than id number 
-# same way as I did for id number 
-# 
+# same way as I did for id number just requires a lot more asking the user for things
+# how would I loop over my_crm.main_menu another way? 
+# can i get the user_selected outside of the method? looks like no at the moment, but i don't know
