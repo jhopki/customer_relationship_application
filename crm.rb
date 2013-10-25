@@ -28,14 +28,22 @@ class CRM
     case user_selected
     when 1
       add_new_contact
+      puts "\e[H\e[2J"
+      main_menu
     when 2
+      puts "\e[H\e[2J"
       modify_existing_contact
+      main_menu
     when 3
       delete_contact
+      main_menu
     when 4
-      Rolodex.display_all_contacts
+      puts "\e[H\e[2J"
+      display_all_contacts
+      main_menu
     when 5
-      Rolodex.display_attribute  #particular attribute of all contacts
+      display_attribute  #particular attribute of all contacts
+      main_menu
     when 6
       puts "Goodbye"
       exit 
@@ -59,36 +67,119 @@ class CRM
     Rolodex.add_contact(contact)
   end
 
+  def display_all_contacts
+    Rolodex.contacts.each do |x| 
+      puts "First Name: #{x.first_name}"
+      puts "Last Name: #{x.last_name}"
+      puts "Email: #{x.email}"
+      puts "Note: #{x.note}"
+      puts "---------------"
+      end
+  end
+
+  def display_attribute   #for all contacts
+    puts "Display what attribute for all contacts?"
+    puts "[1] first name, [2] last name, [3] email or [4] note: "
+    choice = gets.to_i
+    case choice
+    when 1
+      Rolodex.contacts.each {|x| puts x.first_name}
+    when 2
+      Rolodex.contacts.each {|x| puts x.last_name}
+    when 3
+      Rolodex.contacts.each {|x| puts x.email}
+    when 4
+      Rolodex.contacts.each {|x| puts x.note}
+    else
+      puts "Enter a number."
+      Rolodex.display_attribute
+    end 
+    puts
+  end
+
+
+  def display_particular_contact(id_num)
+    puts id_num
+    Rolodex.contacts.each do |x|
+      if x.id == id_num
+        puts "First name: #{x.first_name}"
+        puts "Last name: #{x.last_name}"
+        puts "Email: #{x.email}"
+        puts "Note: #{x.note}"
+        puts
+      end
+    end
+  end
+
+
   def modify_existing_contact
-    puts which contact and modify what
-    # which contact, find contact, modify what, then actually modify it 
+    choices = {1 => "first name", 2 => "last name", 3 => "email", 4 => "note"}
     puts "Modify?: "
     puts "[1] first name, [2] last name, [3] email or [4] note?"
     puts "Enter number"
-    modify_what = gets.to_i #use numbers
-    case modify_what
-    when 1
-      puts "Please enter new first name: "
-      now what = gets.chomp
-    when 2 
-      then what 
+    modify_what = gets.to_i 
+    puts "Please confirm, changing #{choices[modify_what]} (y/n)"
+    confirm = gets.chomp.downcase
+    if confirm == "y"
+      puts "Enter the id number of the contact you want to change: "
+      id_num = gets.to_i
+      case modify_what
+      # search each contact in rolodex to look for match, start by assuming all unique
+      when 1
+        display_particular_contact(id_num)
+        puts "Enter new first name: "
+        new_name = gets.chomp
+        Rolodex.contacts.each {|x| x.first_name = new_name if x.id == id_num}
+        puts "Updated contact:"
+        display_particular_contact(id_num)
+      when 2
+        display_particular_contact(id_num) 
+        puts "Enter new last name: "
+        new_name = gets.chomp
+        Rolodex.contacts.each {|x| x.last_name = new_name if x.id == id_num}
+        puts "Updated contact: "
+        display_particular_contact(id_num)      
+      when 3
+        display_particular_contact(id_num)
+        puts "Enter new email: "
+        new_email = gets.chomp
+        Rolodex.contacts.each {|x| x.email = new_email if x.id == id_num}
+        puts "Updated contact: "
+        display_particular_contact(id_num)  
+      when 4
+        display_particular_contact(id_num)
+        puts "Enter new note:"
+        new_note = gets.chomp
+        Rolodex.contacts.each {|x| x.note = new_note if x.id == id_num}
+        puts "Updated contact: "
+        display_particular_contact(id_num)     
+      end
+    elsif confirm == "n"
+      main_menu
+    else
+      puts "please confirm, (y/n)"
     end
-      
   end
 
   def delete_contact #try displaying a particular contact first
-    puts "Which contact do you wish to delete?"
-    puts "Enter the name, email, note or id number: " #why would delete by note? both names?
-    # choice = gets.chomp (or to_i if use numbers?)
-    #display contact and ask if sure, maybe write method for display one
-    #contact.  maybe should search for contact using whatever and return id num
-    #if first wrong how to not keep finding same one. or assume all contacts are unique
-    # in each way
+    puts "Which contact do you wish to delete? Enter id number: "
+    id_number = gets.to_i
+    display_particular_contact(id_number)
+    puts "Do you want to delete this contact? (y/n)"
+    confirm = gets.chomp.downcase
+    if confirm == "y"
+      Rolodex.contacts.delete_if {|x| x.id == id_number}
+      puts "Contact deleted."
+      display_all_contacts
+    elsif confirm == "n"
+      main_menu
+    else
+      main_menu
+    end
   end
 end
 
 my_crm = CRM.new("firstCRM")
 puts my_crm.name
+
 my_crm.main_menu
-my_crm.main_menu
-# will need final loop for until 6 then end
