@@ -21,6 +21,9 @@ class CRM
   def main_menu
     print_main_menu
     user_selected = gets.to_i
+    #alternate looping method
+    # until user_selected == 6
+    # then call_option etc
     call_option(user_selected)
   end
 
