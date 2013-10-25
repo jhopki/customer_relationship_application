@@ -126,6 +126,10 @@ class CRM
     confirm = gets.chomp.downcase
     if confirm == "y"
       puts "Enter the id number of the contact you want to change: "
+      # puts "Enter the current value of the attribute you wish to change:"
+      # old_value = gets.chomp.downcase
+      # each case would be Rolodex.contacts.each {|x| x.what = new_value if x.what == old_value}
+      # or for finding particular one Rolodex.contacts.each {|x| id_num = x.id if x.what = old_value}
       id_num = gets.to_i
       display_particular_contact(id_num)
       puts "Enter new #{choices[modify_what]}"
@@ -175,7 +179,7 @@ my_crm.main_menu
 
 
 
-#questions is the way I set it to loop a good way or horrible one
+#questions is the way I set it to loop a good way or a horrible one
 # what about searching by other attributes? other than id number 
 # same way as I did for id number just requires a lot more asking the user for things
 # how would I loop over my_crm.main_menu another way? 
