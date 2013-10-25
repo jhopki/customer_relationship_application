@@ -33,12 +33,16 @@ class CRM
     when 3
       delete_contact
     when 4
-      display_all_contacts
+      Rolodex.display_all_contacts
     when 5
-      display_attribute  #particular attribute of all contacts
+      Rolodex.display_attribute  #particular attribute of all contacts
     when 6
       puts "Goodbye"
       exit 
+    else
+      puts "\e[H\e[2J"
+      puts "Enter a number."
+      main_menu      
     end
   end
 
@@ -73,32 +77,13 @@ class CRM
   end
 
   def delete_contact #try displaying a particular contact first
-    
-  end
-
-  def display_all_contacts
-    Rolodex.contacts.each do |x| 
-      puts "First Name: #{x.first_name}"
-      puts "Last Name: #{x.last_name}"
-      puts "Email: #{x.email}"
-      puts "Note: #{x.note}"
-    end
-  end
-
-  def display_attribute   #for all contacts
-    puts "Display what attribute for all contacts?"
-    puts "[1] first name, [2] last name, [3] email or [4] note: "
-    choice = gets.to_i
-    case choice
-    when 1
-      Rolodex.contacts.each {|x| puts x.first_name}
-    when 2
-      Rolodex.contacts.each {|x| puts x.last_name}
-    when 3
-      Rolodex.contacts.each {|x| puts x.email}
-    when 4
-      Rolodex.contacts.each {|x| puts x.note}
-    end    
+    puts "Which contact do you wish to delete?"
+    puts "Enter the name, email, note or id number: " #why would delete by note? both names?
+    # choice = gets.chomp (or to_i if use numbers?)
+    #display contact and ask if sure, maybe write method for display one
+    #contact.  maybe should search for contact using whatever and return id num
+    #if first wrong how to not keep finding same one. or assume all contacts are unique
+    # in each way
   end
 end
 
