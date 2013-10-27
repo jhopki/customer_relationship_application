@@ -21,9 +21,6 @@ class CRM
   def main_menu
     print_main_menu
     user_selected = gets.to_i
-    #alternate looping method
-    # until user_selected == 6
-    # then call_option etc
     call_option(user_selected)
   end
 
@@ -184,4 +181,3 @@ my_crm.main_menu
 #questions is the way I set it to loop a good way or a horrible one
 # what about searching by other attributes? other than id number 
 # same way as I did for id number just requires a lot more asking the user for things
-# how would I loop over my_crm.main_menu another way? found one
